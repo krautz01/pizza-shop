@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 
 export default function Categories() {
   const [activeCatigoties, setActiveCatigoties] = useState(0)
-  const changeCategories = (index) => {
-    setActiveCatigoties(index)
-  }
+  
   const categories = [
     {
       title: 'Все',
@@ -36,7 +34,7 @@ export default function Categories() {
     <div className="categories">
       <ul>
       {categories.map((category) => (
-        <li onClick={() => changeCategories(category.index)} className={activeCatigoties == category.index ? 'active' : ''}>{category.title}</li>
+        <li onClick={() => setActiveCatigoties(category.index)} className={activeCatigoties == category.index ? 'active' : ''}>{category.title}</li>
       ))}
       </ul>
     </div>
