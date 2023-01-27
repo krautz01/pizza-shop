@@ -6,27 +6,27 @@ export default function Categories() {
   const categories = [
     {
       title: 'Все',
-      index: 0
+      id: 0
     },
     {
       title: 'Мясные',
-      index: 1
+      id: 1
     },
     {
       title: 'Вегетарианские',
-      index: 2
+      id: 2
     },
     {
       title: 'Гриль',
-      index: 3
+      id: 3
     },
     {
       title: 'Острые',
-      index: 4
+      id: 4
     },
     {
       title: 'Закрытые',
-      index: 5
+      id: 5
     }
   ];
 
@@ -34,7 +34,7 @@ export default function Categories() {
     <div className="categories">
       <ul>
       {categories.map((category) => (
-        <li onClick={() => setActiveCatigoties(category.index)} className={activeCatigoties == category.index ? 'active' : ''}>{category.title}</li>
+        <li key={category.id} onClick={() => setActiveCatigoties(category.id)} className={activeCatigoties == category.id ? 'active' : ''}>{category.title}</li>
       ))}
       </ul>
     </div>
