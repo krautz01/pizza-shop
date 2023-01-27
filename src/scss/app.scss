@@ -5,7 +5,10 @@
 @import 'components/all';
 
 body {
-  background-color: $background;
+  background-image: url(../assets/img/Italia-pizza.jpg);
+  max-width: 100%;
+  height: auto;
+
 }
 
 .wrapper {
