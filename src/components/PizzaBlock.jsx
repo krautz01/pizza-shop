@@ -7,7 +7,8 @@ export default function PizzaBlock({ title, price, imageUrl, sizes, types }) {
   const typeNames = ["тонкая", "традиционная"];
 
   return (
-    <div className="pizza-block">
+    <div className="pizza-block-wrapper">
+      <div className="pizza-block">
       <h4 className="pizza-block__title">{title}</h4>
       <img className="pizza-block__image" src={imageUrl} alt={title} />
       <div className="pizza-block__selector">
@@ -56,6 +57,7 @@ export default function PizzaBlock({ title, price, imageUrl, sizes, types }) {
           <i>{count}</i>
         </button>
       </div>
+    </div>
     </div>
   );
 }
