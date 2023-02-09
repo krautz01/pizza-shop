@@ -1,19 +1,27 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import PizzaBlockSkeleton from "../components/PizzaBlockSkeleton";
 import { Pagination } from "../components/Pagination";
+import { SearchContext } from "../App";
+import { setCategoryID } from "../redux/slices/filterSlice";
 
-export default function Home({ searchValue }) {
+export default function Home() {
   const [pizzas, setPizzas] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [categoryID, setCategoryID] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1)
-  const [sortType, setSortType] = React.useState({
-    name: "популярности",
-    sortProperty: "rating",
-  });
+  const { searchValue } = React.useContext(SearchContext);
+
+  const dispatch = useDispatch();
+  const categoryID = useSelector((state) => state.filter.categoryID);
+  const sortType = useSelector((state) => state.filter.sort.sortProperty);
+
+  const onChangeCategory = (ID) => {
+    dispatch(setCategoryID(ID));
+  };
+
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -37,9 +45,9 @@ export default function Home({ searchValue }) {
       <div className="content__top">
         <Categories
           value={categoryID}
-          onChangeCategory={(i) => setCategoryID(i)}
+          onChangeCategory={(i) => onChangeCategory(i)}
         />
-        <Sort value={sortType} onChangeSort={(i) => setSortType(i)} />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
@@ -49,14 +57,16 @@ export default function Home({ searchValue }) {
             ))
           : pizzas
               .filter((pizza) => {
-                if (pizza.title.toLowerCase().includes(searchValue.toLowerCase())) {
+                if (
+                  pizza.title.toLowerCase().includes(searchValue.toLowerCase())
+                ) {
                   return true;
                 }
                 return false;
               })
               .map((pizza) => <PizzaBlock {...pizza} key={pizza.id} />)}
       </div>
-      <Pagination onChangePage={(number) => setCurrentPage(number)}/>
+      <Pagination onChangePage={(number) => setCurrentPage(number)} />
     </div>
   );
 }
