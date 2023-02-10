@@ -15,7 +15,7 @@ export default function Sort() {
 
   const onClickSetSorting = (obj) => {
     dispatch(setSort(obj));
-    setOpen(false);
+    setOpen(!open);
   };
 
   return (

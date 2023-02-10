@@ -16,7 +16,7 @@ export default function Home() {
 
   const dispatch = useDispatch();
   const categoryID = useSelector((state) => state.filter.categoryID);
-  const sortType = useSelector((state) => state.filter.sort.sortProperty);
+  const sortType = useSelector((state) => state.filter.sort);
 
   const onChangeCategory = (ID) => {
     dispatch(setCategoryID(ID));

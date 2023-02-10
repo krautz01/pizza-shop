@@ -1,8 +1,21 @@
 import React from "react";
-import styles from './Search.module.scss';
+import styles from "./Search.module.scss";
+import debounce from "lodash.debounce";
 
-export function Search({searchValue, setSearchValue}) {
-    
+const testDebounce = React.useCallback(
+  debounce(() => {
+    console.log("8888");
+  }, 2000),
+  []
+);
+
+export function Search({ searchValue, setSearchValue }) {
+  const inputRef = React.useRef();
+  const onChangeInput = (event) => {
+    setSearchValue(event.target.value);
+    testDebounce();
+  };
+
   return (
     <div className={styles.root}>
       <svg
@@ -40,8 +53,10 @@ export function Search({searchValue, setSearchValue}) {
         />
       </svg>
       <input
+        ref={inputRef}
         value={searchValue}
-        onChange={(event) => setSearchValue(event.target.value)}
+        onChange={onChangeInput}
+        onClick={() => inputRef.current.focus()}
         className={styles.input}
         placeholder="Поиск пиццы..."
       />
