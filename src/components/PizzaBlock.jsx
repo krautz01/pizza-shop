@@ -16,7 +16,7 @@ export default function PizzaBlock({ title, price, imageUrl, sizes, types }) {
           {types.map((type) => (
             <li
               key={type}
-              className={activeType == type ? "active" : ""}
+              className={activeType === type ? "active" : ""}
               onClick={() => setActiveType(type)}
             >
               {typeNames[type]}
@@ -27,7 +27,7 @@ export default function PizzaBlock({ title, price, imageUrl, sizes, types }) {
           {sizes.map((size, i) => (
             <li
               key={size}
-              className={activeSize == i ? "active" : ""}
+              className={activeSize === i ? "active" : ""}
               onClick={() => setActiveSize(i)}
             >
               {size} см.

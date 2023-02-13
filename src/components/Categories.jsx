@@ -17,7 +17,7 @@ export default function Categories({ value, onChangeCategory }) {
           <li
             key={i}
             onClick={() => onChangeCategory(i)}
-            className={value == i ? "active" : ""}
+            className={value === i ? "active" : ""}
           >
             {categoryName}
           </li>

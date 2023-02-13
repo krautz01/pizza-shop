@@ -6,37 +6,36 @@ import PizzaBlock from "../components/PizzaBlock";
 import PizzaBlockSkeleton from "../components/PizzaBlockSkeleton";
 import { Pagination } from "../components/Pagination";
 import { SearchContext } from "../App";
-import { setCategoryID } from "../redux/slices/filterSlice";
+import { setCategoryID, setCurrentPage } from "../redux/slices/filterSlice";
+import axios from "axios";
 
 export default function Home() {
   const [pizzas, setPizzas] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [currentPage, setCurrentPage] = React.useState(1)
   const { searchValue } = React.useContext(SearchContext);
 
   const dispatch = useDispatch();
   const categoryID = useSelector((state) => state.filter.categoryID);
   const sortType = useSelector((state) => state.filter.sort);
+  const currentPage = useSelector((state) => state.filter.currentPage)
 
   const onChangeCategory = (ID) => {
     dispatch(setCategoryID(ID));
   };
-
+  const onChangePage = (number) => {
+    dispatch(setCurrentPage(number))
+  }
 
   React.useEffect(() => {
     setIsLoading(true);
-    fetch(
+    axios.get(
       `https://63d3ab7d8d4e68c14eafb6bd.mockapi.io/pizzas?page=${currentPage}&limit=4&${
         categoryID > 0 ? `category=${categoryID}` : ""
       }&sortBy=${sortType.sortProperty}&order=asc`
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((arr) => {
-        setPizzas(arr);
-        setIsLoading(false);
-      });
+    ).then((res) => {
+      setPizzas(res.data)
+      setIsLoading(false)
+    });
     window.scrollTo(0, 0);
   }, [categoryID, sortType, currentPage]);
 
@@ -66,7 +65,7 @@ export default function Home() {
               })
               .map((pizza) => <PizzaBlock {...pizza} key={pizza.id} />)}
       </div>
-      <Pagination onChangePage={(number) => setCurrentPage(number)} />
+      <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   );
 }
